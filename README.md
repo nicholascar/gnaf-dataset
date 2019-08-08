@@ -34,19 +34,19 @@ This code is licensed using the GPL v3 (see the [LICENSE file](LICENSE) for the 
 ### Product Owner: 
 **Joseph Abhayaratna**  
 *Chief Technical Officer*  
-PSMA Australia Ltd. 
+PSMA Australia Ltd.  
 <Joseph.Abhayaratna@psma.com.au>  
 
 ### Developers:
-**Ashley Sommer** 
-CSIRO Land & Water, 
-Environmental Informatics Group 
-<ashley.sommer@csiro.au>
+**Ashley Sommer**  
+CSIRO Land & Water,   
+Environmental Informatics Group    
+<ashley.sommer@csiro.au>  
 
-**Shane Seaton**
-CSIRO Land & Water, 
-Environmental Informatics Group
-<shane.seaton@csiro.au>
+**Shane Seaton**  
+CSIRO Land & Water,  
+Environmental Informatics Group  
+<shane.seaton@csiro.au>   
 
 ### Contributors:  
 **Nicholas Car**  
