@@ -31,15 +31,25 @@ This code is licensed using the GPL v3 (see the [LICENSE file](LICENSE) for the 
 
 
 ## Contacts
-Product Owner:
+### Product Owner: 
 **Joseph Abhayaratna**  
 *Chief Technical Officer*  
-PSMA Australia Ltd.
+PSMA Australia Ltd. 
 <Joseph.Abhayaratna@psma.com.au>  
 
-Developer:  
+### Developers:
+**Ashley Sommer** 
+CSIRO Land & Water, 
+Environmental Informatics Group 
+<ashley.sommer@csiro.au>
+
+**Shane Seaton**
+CSIRO Land & Water, 
+Environmental Informatics Group
+<shane.seaton@csiro.au>
+
+### Contributors:  
 **Nicholas Car**  
-*Senior Experimental Scientist*  
 CSIRO Land & Water  
 <nicholas.car@csiro.au>  
 <http://orcid.org/0000-0002-8742-7730>  
