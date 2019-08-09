@@ -756,7 +756,7 @@ class Address(GNAFModel):
 
             # g.add((a, GNAF.hasPrivateStreet,
             # Literal(True if self.private_street is not None else False, datatype=XSD.boolean)))
-            g.add((a, GNAF.hasStreet, URIRef(config.URI_STREETLOCALITY_INSTANCE_BASE + str(self.street_locality_pid))))
+            g.add((a, GNAF.hasStreetLocality, URIRef(config.URI_STREETLOCALITY_INSTANCE_BASE + str(self.street_locality_pid))))
 
             g.add((a, GNAF.hasGnafConfidence, URIRef(self.confidence_uri)))
             g.add((URIRef(self.confidence_uri), RDFS.label, Literal(self.confidence_prefLabel, datatype=XSD.string)))
