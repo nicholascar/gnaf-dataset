@@ -45,31 +45,37 @@
     ] ;
   dcat:distribution [
       a dcat:Distribution ;
+      dcat:accessService :sparql ;
       dcat:accessService <https://gnafld.net/> ;
       dcat:mediaType <https://www.iana.org/assignments/media-types/application/ld+json> ;
     ] ;
   dcat:distribution [
       a dcat:Distribution ;
+      dcat:accessService :sparql ;
       dcat:accessService <https://gnafld.net/> ;
       dcat:mediaType <https://www.iana.org/assignments/media-types/application/n-triples> ;
     ] ;
   dcat:distribution [
       a dcat:Distribution ;
+      dcat:accessService :sparql ;
       dcat:accessService <https://gnafld.net/> ;
       dcat:mediaType <https://www.iana.org/assignments/media-types/application/rdf+xml> ;
     ] ;
   dcat:distribution [
       a dcat:Distribution ;
+      dcat:accessService :sparql ;
       dcat:accessService <https://gnafld.net/> ;
       dcat:mediaType <https://www.iana.org/assignments/media-types/text/html> ;
     ] ;
   dcat:distribution [
       a dcat:Distribution ;
+      dcat:accessService :sparql ;
       dcat:accessService <https://gnafld.net/> ;
       dcat:mediaType <https://www.iana.org/assignments/media-types/text/n3> ;
     ] ;
   dcat:distribution [
       a dcat:Distribution ;
+      dcat:accessService :sparql ;
       dcat:accessService <https://gnafld.net/> ;
       dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> ;
     ] ;
@@ -120,8 +126,12 @@
   dct:title "GNAF SPARQL Service" ;
   dcat:contactPoint [] ;
   dcat:endpointDescription <http://linked.data.gov.au/dataset/gnaf/sparql.ttl> ;
+  dcat:endpointDescription [
+      a owl:Thing ;
+      rdfs:comment "This should probably point to a https://www.w3.org/TR/sparql11-service-description/" ;
+    ] ;
   dcat:endpointURL :sparql ;
-  dcat:servesDataset <https://data.gov.au/dataset/geocoded-national-address-file-g-naf> ;
+  dcat:servesDataset <http://linked.data.gov.au/dataset/gnaf> ;
 .
 <https://data.gov.au/dataset/geocoded-national-address-file-g-naf>
   a dcat:Dataset ;
