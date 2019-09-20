@@ -1,0 +1,307 @@
+{
+  "@graph" : [ {
+    "@id" : "_:b0",
+    "@type" : "prov:Attribution",
+    "hadRole" : "http://registry.it.csiro.au/def/isotc211/CI_RoleCode/originator",
+    "agent" : [ "https://www.directory.gov.au/portfolios/industry-innovation-and-science/commonwealth-scientific-and-industrial-research-organisation", "https://ror.org/03qn8fb07", "http://catalogue.linked.data.gov.au/org/csiro" ]
+  }, {
+    "@id" : "_:b10",
+    "@type" : "dcat:Distribution",
+    "accessService" : "https://gnafld.net/",
+    "mediaType" : "https://www.iana.org/assignments/media-types/application/rdf+xml"
+  }, {
+    "@id" : "_:b11",
+    "@type" : "dcat:Distribution",
+    "accessService" : "https://gnafld.net/",
+    "mediaType" : "https://www.iana.org/assignments/media-types/text/html"
+  }, {
+    "@id" : "_:b12",
+    "@type" : "dct:Location",
+    "bbox" : "POLYGON ((112.0000 -44.0000, 112.0000 -9.0000, 154.0000 -9.0000, 154.0000 -44.0000, 112.0000 -44.0000))"
+  }, {
+    "@id" : "_:b13",
+    "@type" : "vcard:Organization",
+    "fn" : "Department of Industry, Innovation and Science",
+    "hasEmail" : "http://linked.data.gov.au/dataset/spatial@industry.gov.au"
+  }, {
+    "@id" : "_:b14",
+    "@type" : "vcard:Individual",
+    "fn" : "Ashley Sommer",
+    "hasEmail" : "mailto:ashley.sommer@csiro.au",
+    "hasTelephone" : "_:b8"
+  }, {
+    "@id" : "_:b2",
+    "@type" : "dcat:Distribution",
+    "accessService" : "https://gnafld.net/",
+    "mediaType" : "https://www.iana.org/assignments/media-types/text/n3"
+  }, {
+    "@id" : "_:b3",
+    "@type" : "dcat:Distribution",
+    "accessService" : "https://gnafld.net/",
+    "mediaType" : "https://www.iana.org/assignments/media-types/application/ld+json"
+  }, {
+    "@id" : "_:b4",
+    "@type" : "prov:Activity",
+    "editorialNote" : "Much of the descriptive metadata in this record is copied over from the source. The set of keywords has been trimmed to reflect the fact that some feature-types from the source have not (yet) been included in the linked-data representation. ",
+    "endedAtTime" : "2019-06-01T00:00:00.00",
+    "used" : [ "_:b5", "http://data.gov.au/dataset/geocoded-national-address-file-g-naf" ]
+  }, {
+    "@id" : "_:b5",
+    "@type" : "prov:Entity",
+    "comment" : "Ashley's awsome ETL system"
+  }, {
+    "@id" : "_:b6",
+    "@type" : "dcat:Distribution",
+    "accessService" : "https://gnafld.net/",
+    "mediaType" : "https://www.iana.org/assignments/media-types/text/turtle"
+  }, {
+    "@id" : "_:b7",
+    "@type" : "dcat:Distribution",
+    "accessService" : "https://gnafld.net/",
+    "mediaType" : "https://www.iana.org/assignments/media-types/application/n-triples"
+  }, {
+    "@id" : "_:b8",
+    "hasValue" : "tel:+61738335673"
+  }, {
+    "@id" : "_:b9",
+    "@type" : "dcat:Relationship",
+    "relation" : "http://data.gov.au/dataset/geocoded-national-address-file-g-naf",
+    "comment" : "Derived from G-NAF; converted to a linked-data representation conforming to the GNAF Ontology.",
+    "hadRole" : "http://www.iana.org/assignments/relation/original"
+  }, {
+    "@id" : "http://linked.data.gov.au/dataset/gnaf",
+    "@type" : "dcat:Dataset",
+    "contributor" : "Ashley Sommer",
+    "creator" : "Nicholas Car",
+    "publisher" : "PSMA Australia",
+    "conformsTo" : "http://linked.data.gov.au/def/gnaf",
+    "dct:contributor" : {
+      "@id" : "https://orcid.org/0000-0003-0590-0131"
+    },
+    "dct:creator" : {
+      "@id" : "https://orcid.org/0000-0002-8742-7730"
+    },
+    "description" : "A Linked Data representation of the content of the Geocoded National Address File (G-NAF) represented according to a GNAF ontology. This is derived from the PSMA G-NAF product. ",
+    "license" : "https://data.gov.au/dataset/19432f89-dc3a-4ef3-b943-5326ef1dbecc/resource/09f74802-08b1-4214-a6ea-3591b2753d30",
+    "dct:publisher" : {
+      "@id" : "http://catalogue.linked.data.gov.au/org/psma"
+    },
+    "spatial" : "_:b12",
+    "title" : "G-NAF - distributed as Linked Data",
+    "contactPoint" : "_:b14",
+    "distribution" : [ "_:b11", "_:b10", "_:b2", "_:b3", "_:b6", "_:b7" ],
+    "keyword" : [ "gnaf", "geocoding", "address", "spatial", "psma", "location", "national address file", "geocoded", "g-naf" ],
+    "dcat:landingPage" : {
+      "@id" : "https://gnafld.net/"
+    },
+    "qualifiedRelation" : "_:b9",
+    "spatialResolutionInMeters" : "0.001",
+    "wasDerivedFrom" : "https://data.gov.au/dataset/geocoded-national-address-file-g-naf",
+    "wasGeneratedBy" : "_:b4"
+  }, {
+    "@id" : "http://linked.data.gov.au/dataset/gnaf/",
+    "@type" : "owl:Ontology",
+    "imports" : [ "http://www.w3.org/ns/dcat", "http://purl.org/pav" ]
+  }, {
+    "@id" : "http://linked.data.gov.au/dataset/gnaf/sparql",
+    "@type" : "dcat:DataService",
+    "contributor" : "Ashley Sommer",
+    "creator" : [ {
+      "@language" : "en",
+      "@value" : "Nicholas Car"
+    }, "Joseph Abhayaratna" ],
+    "publisher" : "PSMA Australia",
+    "dct:creator" : {
+      "@id" : "http://orcid.org/0000-0002-8742-7730"
+    },
+    "description" : "A SPARQL 1.1 service accessing all of the content of the GNAF in RDF",
+    "license" : "https://data.gov.au/dataset/19432f89-dc3a-4ef3-b943-5326ef1dbecc/resource/09f74802-08b1-4214-a6ea-3591b2753d30",
+    "dct:publisher" : {
+      "@id" : "http://catalogue.linked.data.gov.au/org/psma"
+    },
+    "title" : "GNAF SPARQL Service",
+    "contactPoint" : "_:b1",
+    "endpointDescription" : "http://linked.data.gov.au/dataset/gnaf/sparql.ttl",
+    "endpointURL" : "http://linked.data.gov.au/dataset/gnaf/sparql",
+    "servesDataset" : "https://data.gov.au/dataset/geocoded-national-address-file-g-naf"
+  }, {
+    "@id" : "https://data.gov.au/dataset/geocoded-national-address-file-g-naf",
+    "@type" : "dcat:Dataset",
+    "publisher" : "PSMA Australia",
+    "description" : "The Geocoded National Address File (referred to as G-NAF) is Australia’s authoritative, geocoded address file.\r\n\r\nG-NAF is one of the most ubiquitous and powerful spatial datasets. It contains more than 13 million Australian physical address records. The records include geocodes. These are latitude and longitude map coordinates. G-NAF does not contain any names or personal information.\r\n\r\nG-NAF is produced by PSMA Australia Limited (PSMA), an unlisted public company formed by the nine governments of Australia to collate and standardise, format and aggregate location data from each of the jurisdictions into authoritative location based national datasets.\r\n\r\nThis initiative to make the G-NAF openly available has been achieved through collaboration between PSMA and the Commonwealth and State and Territory Governments.\r\n\r\nUpdated versions of the G-NAF will be published on a quarterly basis from February 2016.\r\n\r\nFor further information on G-NAF, including FAQs on the data, see: www.psma.com.au/products/g-naf or contact and PSMA’s network of value added resellers and integrators provide a range of commercial products based on G-NAF including software solutions, consultancy and support.",
+    "issued" : "2016-02-22",
+    "landingPage" : "https://data.gov.au/dataset/19432f89-dc3a-4ef3-b943-5326ef1dbecc",
+    "dct:publisher" : {
+      "@id" : "http://catalogue.linked.data.gov.au/org/psma"
+    },
+    "title" : "PSMA Geocoded National Address File (G-NAF)",
+    "updated" : "2018-08-27",
+    "contactPoint" : "_:b13"
+  }, {
+    "@id" : "https://gnafld.net/",
+    "@type" : "dcat:DataService",
+    "publisher" : "PSMA",
+    "conformsTo" : "https://github.com/UKGovLD/linked-data-api/blob/wiki/Specification.md",
+    "dcat:endpointDescription" : "Link to Swagger description here Ashley",
+    "endpointURL" : "https://gnafld.net/",
+    "servesDataset" : "http://linked.data.gov.au/dataset/gnaf",
+    "qualifiedAttribution" : "_:b0"
+  } ],
+  "@context" : {
+    "agent" : {
+      "@id" : "http://www.w3.org/ns/prov#agent",
+      "@type" : "@id"
+    },
+    "hadRole" : {
+      "@id" : "http://www.w3.org/ns/dcat#hadRole",
+      "@type" : "@id"
+    },
+    "endpointDescription" : {
+      "@id" : "http://www.w3.org/ns/dcat#endpointDescription",
+      "@type" : "@id"
+    },
+    "creator" : {
+      "@id" : "http://purl.org/dc/elements/1.1/creator"
+    },
+    "title" : {
+      "@id" : "http://purl.org/dc/terms/title"
+    },
+    "publisher" : {
+      "@id" : "http://purl.org/dc/elements/1.1/publisher"
+    },
+    "description" : {
+      "@id" : "http://purl.org/dc/terms/description"
+    },
+    "license" : {
+      "@id" : "http://purl.org/dc/terms/license",
+      "@type" : "@id"
+    },
+    "servesDataset" : {
+      "@id" : "http://www.w3.org/ns/dcat#servesDataset",
+      "@type" : "@id"
+    },
+    "contributor" : {
+      "@id" : "http://purl.org/dc/elements/1.1/contributor"
+    },
+    "contactPoint" : {
+      "@id" : "http://www.w3.org/ns/dcat#contactPoint",
+      "@type" : "@id"
+    },
+    "endpointURL" : {
+      "@id" : "http://www.w3.org/ns/dcat#endpointURL",
+      "@type" : "@id"
+    },
+    "mediaType" : {
+      "@id" : "http://www.w3.org/ns/dcat#mediaType",
+      "@type" : "@id"
+    },
+    "accessService" : {
+      "@id" : "http://www.w3.org/ns/dcat#accessService",
+      "@type" : "@id"
+    },
+    "imports" : {
+      "@id" : "http://www.w3.org/2002/07/owl#imports",
+      "@type" : "@id"
+    },
+    "used" : {
+      "@id" : "http://www.w3.org/ns/prov#used",
+      "@type" : "@id"
+    },
+    "endedAtTime" : {
+      "@id" : "http://www.w3.org/ns/prov#endedAtTime",
+      "@type" : "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "editorialNote" : {
+      "@id" : "http://www.w3.org/2004/02/skos/core#editorialNote"
+    },
+    "hasValue" : {
+      "@id" : "http://www.w3.org/2006/vcard/ns#hasValue",
+      "@type" : "@id"
+    },
+    "comment" : {
+      "@id" : "http://www.w3.org/2000/01/rdf-schema#comment"
+    },
+    "relation" : {
+      "@id" : "http://purl.org/dc/terms/relation",
+      "@type" : "@id"
+    },
+    "qualifiedAttribution" : {
+      "@id" : "http://www.w3.org/ns/prov#qualifiedAttribution",
+      "@type" : "@id"
+    },
+    "conformsTo" : {
+      "@id" : "http://purl.org/dc/terms/conformsTo",
+      "@type" : "@id"
+    },
+    "bbox" : {
+      "@id" : "http://www.w3.org/ns/dcat#bbox",
+      "@type" : "http://www.opengis.net/ont/geosparql#wktLiteral"
+    },
+    "hasEmail" : {
+      "@id" : "http://www.w3.org/2006/vcard/ns#hasEmail",
+      "@type" : "@id"
+    },
+    "fn" : {
+      "@id" : "http://www.w3.org/2006/vcard/ns#fn"
+    },
+    "updated" : {
+      "@id" : "http://purl.org/dc/terms/updated",
+      "@type" : "http://www.w3.org/2001/XMLSchema#date"
+    },
+    "landingPage" : {
+      "@id" : "http://purl.org/dc/terms/landingPage",
+      "@type" : "@id"
+    },
+    "issued" : {
+      "@id" : "http://purl.org/dc/terms/issued",
+      "@type" : "http://www.w3.org/2001/XMLSchema#date"
+    },
+    "hasTelephone" : {
+      "@id" : "http://www.w3.org/2006/vcard/ns#hasTelephone",
+      "@type" : "@id"
+    },
+    "qualifiedRelation" : {
+      "@id" : "http://www.w3.org/ns/dcat#qualifiedRelation",
+      "@type" : "@id"
+    },
+    "spatial" : {
+      "@id" : "http://purl.org/dc/terms/spatial",
+      "@type" : "@id"
+    },
+    "spatialResolutionInMeters" : {
+      "@id" : "http://www.w3.org/ns/dcat#spatialResolutionInMeters",
+      "@type" : "http://www.w3.org/2001/XMLSchema#decimal"
+    },
+    "keyword" : {
+      "@id" : "http://www.w3.org/ns/dcat#keyword"
+    },
+    "distribution" : {
+      "@id" : "http://www.w3.org/ns/dcat#distribution",
+      "@type" : "@id"
+    },
+    "wasGeneratedBy" : {
+      "@id" : "http://www.w3.org/ns/prov#wasGeneratedBy",
+      "@type" : "@id"
+    },
+    "wasDerivedFrom" : {
+      "@id" : "http://www.w3.org/ns/prov#wasDerivedFrom",
+      "@type" : "@id"
+    },
+    "@vocab" : "http://linked.data.gov.au/dataset/gnaf/",
+    "pav" : "http://purl.org/pav/",
+    "gsp" : "http://www.opengis.net/ont/geosparql#",
+    "owl" : "http://www.w3.org/2002/07/owl#",
+    "xsd" : "http://www.w3.org/2001/XMLSchema#",
+    "skos" : "http://www.w3.org/2004/02/skos/core#",
+    "rdfs" : "http://www.w3.org/2000/01/rdf-schema#",
+    "vcard" : "http://www.w3.org/2006/vcard/ns#",
+    "pa" : "http://purl.org/pav",
+    "dct" : "http://purl.org/dc/terms/",
+    "rdf" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "xml" : "http://www.w3.org/XML/1998/namespace",
+    "dcat" : "http://www.w3.org/ns/dcat#",
+    "gnaf" : "http://linked.data.gov.au/def/gnaf#",
+    "prov" : "http://www.w3.org/ns/prov#",
+    "dc" : "http://purl.org/dc/elements/1.1/"
+  }
+}
