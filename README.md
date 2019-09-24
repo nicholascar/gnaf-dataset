@@ -1,4 +1,4 @@
-# GNAF Linked Data dataset
+# GNAF 2016-05 Linked Data dataset
 A Linked Data version of PSMA's G-NAF dataset.
 
 

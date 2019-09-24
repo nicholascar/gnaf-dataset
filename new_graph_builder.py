@@ -15,7 +15,7 @@ from app import app
 
 # --- CONFIGURABLE OPTIONS
 OUTPUT_DIRECTORY = "./instance"  # Relative path from pwd
-INSTANCES_PER_FILE = 60
+INSTANCES_PER_FILE = 1000
 HARVESTABLE_INSTANCE_VIEW = "gnaf"
 MULTI_PROCESSING = True
 MULTI_THREADING = True
@@ -26,10 +26,10 @@ VERBOSE_MODE = True
 
 #TODO: Automate this, somehow.
 INSTANCE_URI_TO_LOCAL_ROUTE = {
-    "http://linked.data.gov.au/dataset/gnaf/locality/": "/locality/",
-    "http://linked.data.gov.au/dataset/gnaf/address/": "/address/",
-    "http://linked.data.gov.au/dataset/gnaf/streetLocality/": "/streetLocality/",
-    "http://linked.data.gov.au/dataset/gnaf/addressSite/": "/addressSite/",
+    "http://linked.data.gov.au/dataset/gnaf-2016-05/locality/": "/locality/",
+    "http://linked.data.gov.au/dataset/gnaf-2016-05/address/": "/address/",
+    "http://linked.data.gov.au/dataset/gnaf-2016-05/streetLocality/": "/streetLocality/",
+    "http://linked.data.gov.au/dataset/gnaf-2016-05/addressSite/": "/addressSite/",
 }
 # -- END CONFIGURABLE OPTIONS
 # ---------------------------

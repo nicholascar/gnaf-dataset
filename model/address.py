@@ -233,21 +233,13 @@ class Address(GNAFModel):
 
             # MBs
             self.mesh_block_2011s = {}
-            self.mesh_block_2016s = {}
             s6 = sql.SQL('''SELECT 
                               mb_2011_code,
-                              mb_2016_code, 
                               a.uri mb2011_uri, 
-                              a.prefLabel mb2011_prefLabel,
-                              b.uri mb2016_uri, 
-                              b.prefLabel mb2016_prefLabel  
-                            FROM {dbschema}.address_mesh_block_2016_view
-                            INNER JOIN {dbschema}.address_mesh_block_2011_view 
-                            ON {dbschema}.address_mesh_block_2016_view.address_detail_pid 
-                            = {dbschema}.address_mesh_block_2011_view.address_detail_pid
+                              a.prefLabel mb2011_prefLabel 
+                            FROM {dbschema}.address_mesh_block_2011_view
                             LEFT JOIN codes.meshblockmatch a ON {dbschema}.address_mesh_block_2011_view.mb_match_code = a.code 
-                            LEFT JOIN codes.meshblockmatch b ON {dbschema}.address_mesh_block_2016_view.mb_match_code = b.code 
-                            WHERE {dbschema}.address_mesh_block_2016_view.address_detail_pid = {id};''') \
+                            WHERE {dbschema}.address_mesh_block_2011_view.address_detail_pid = {id};''') \
                 .format(dbschema=sql.Identifier(config.DB_SCHEMA), id=sql.Literal(self.id))
 
             self.cursor.execute(s6)
@@ -258,11 +250,7 @@ class Address(GNAFModel):
                     'subclass_uri': r.mb2011_uri,
                     'subclass_label': r.mb2011_preflabel  # note use of preflabel, not prefLabel
                 }
-                self.mesh_block_2016s[config.URI_MB_2016_INSTANCE_BASE + r.mb_2016_code] = {
-                    'string': r.mb_2016_code,
-                    'subclass_uri': r.mb2016_uri,
-                    'subclass_label': r.mb2016_preflabel  # note use of preflabel, not prefLabel
-                }
+
 
     def __del__(self):
         if self._cursor_context_manager:
@@ -321,8 +309,6 @@ class Address(GNAFModel):
                 primary_addresses=self.primary_addresses,
                 mesh_block_2011_uri=config.URI_MB_2011_INSTANCE_BASE + '%s',
                 mesh_block_2011s=self.mesh_block_2011s,
-                mesh_block_2016_uri=config.URI_MB_2016_INSTANCE_BASE + '%s',
-                mesh_block_2016s=self.mesh_block_2016s,
                 street_string=self.street_string,
                 schemaorg=self.export_schemaorg()
             )
@@ -740,7 +726,6 @@ class Address(GNAFModel):
                 subclass_label = "Unknown"
             g.add((a, RDFS.label,
                    Literal('Address ' + self.id + ' of ' + subclass_label + ' type', datatype=XSD.string)))
-
             g.add((a, RDFS.comment,
                    Literal(self.address_string, datatype=XSD.string)))
             # RDF: geometry

@@ -145,13 +145,4 @@
             </td>
         </tr>
         {% endif %}
-        {% if mesh_block_2016s.items()|length > 0 %}
-        <tr>
-            <td><a href="http://linked.data.gov.au/def/gnaf#hasMeshBlockMatch">Mesh Blocks 2016</a></td><td>
-                {% for mb_uri, mb in mesh_block_2016s.items() %}
-                    <code><a href="{{ mb['subclass_uri'] }}">{{ mb['subclass_label'] }}</a> &rarr; <a href="{{ mb_uri }}">{{ mb['string'] }}</a></code><br />
-                {% endfor %}
-            </td>
-        </tr>
-        {% endif %}
     </table>
