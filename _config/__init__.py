@@ -1,5 +1,5 @@
 from os.path import dirname, realpath, join, abspath
-import psycopg2
+import psycopg2, os
 
 APP_DIR = dirname(dirname(realpath(__file__)))
 TEMPLATES_DIR = join(dirname(dirname(abspath(__file__))), 'view', 'templates')
@@ -36,7 +36,7 @@ LOCALITY_COUNT = 16414 # May 2016
 URI_LOCALITY_CLASS = '/'.join([DEF_URI_PREFIX, 'gnaf#Locality'])
 URI_LOCALITY_INSTANCE_BASE = '/'.join([URI_BASE, 'locality/'])
 
-def from_env(env_var)
+def from_env(env_var):
     if os.environ[env_var] is None:
         print('You must set an environment variable for the DB connection called ' + env_var)
         exit()
