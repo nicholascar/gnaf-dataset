@@ -29,8 +29,8 @@
     ereg:superregister <http://linked.data.gov.au/dataset/gnaf-2016-05> ;
     rdfs:comment "Register of all GNAF Street Localities"^^xsd:string .
 
-<http://linked.data.gov.au/dataset/gnaf> a reg:Register ;
-    rdfs:label "The GNAF's Register of Registers"^^xsd:string ;
+<http://linked.data.gov.au/dataset/gnaf-2016-05> a reg:Register ;
+    rdfs:label "The GNAF's 2016-05 Register of Registers"^^xsd:string ;
     reg:containedItemClass reg:Register ;
     reg:subregister
         <http://linked.data.gov.au/dataset/gnaf-2016-05/address/> ,
