@@ -9,6 +9,7 @@ from rdflib import Graph
 import io
 from urllib.request import Request, build_opener, HTTPPasswordMgrWithDefaultRealm, HTTPBasicAuthHandler
 from urllib.parse import urlencode
+from urllib.error import HTTPError
 import _config as config
 import controller.LOCIDatasetRenderer
 
@@ -266,5 +267,7 @@ def sparql_query(sparql_query, format_mimetype='application/sparql-results+json'
         #r = requests.post(config.SPARQL_QUERY_URI, auth=auth, data=data, headers=headers, timeout=30)
         #import pprint
         #pprint.pprint(r.headers)
+    except HTTPError as he:
+        return "HTTP Exception! Status: {}\n{}".format(str(he.code), repr(he))
     except Exception as e:
-        raise e
+        return str(e)
