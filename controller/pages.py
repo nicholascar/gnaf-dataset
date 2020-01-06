@@ -8,6 +8,7 @@ import json
 from rdflib import Graph
 import io
 from urllib.request import Request, build_opener, HTTPPasswordMgrWithDefaultRealm, HTTPBasicAuthHandler
+from urllib.parse import urlencode
 import _config as config
 import controller.LOCIDatasetRenderer
 
@@ -250,9 +251,9 @@ sparql_endpoint_password_mgr.add_password(
 basic_pw_handler = HTTPBasicAuthHandler(sparql_endpoint_password_mgr)
 
 def sparql_query(sparql_query, format_mimetype='application/sparql-results+json'):
-    """ Make a SPARQL query"""
-    #auth = (config.SPARQL_AUTH_USR, config.SPARQL_AUTH_PWD)
+    """Make a SPARQL query"""
     data = {'query': sparql_query}
+    data = urlencode(data).encode(encoding='utf-8')
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': format_mimetype
