@@ -3,6 +3,7 @@ from db import get_db_cursor, reg
 from model import NotFoundError, GNAFModel
 from flask import render_template
 from rdflib import Graph, URIRef, RDF, RDFS, XSD, Namespace, Literal, BNode
+from rdflib.namespace import DCTERMS
 import _config as config
 from psycopg2 import sql
 import json
@@ -720,24 +721,29 @@ class Address(GNAFModel):
             GEO = Namespace('http://www.opengis.net/ont/geosparql#')
             g.bind('geo', GEO)
 
+            SF = Namespace('http://www.opengis.net/ont/sf#')
+            g.bind('sf', SF)
+            LOCI = Namespace("http://linked.data.gov.au/def/loci#")
+            g.bind('loci', LOCI)
             PROV = Namespace('http://www.w3.org/ns/prov#')
             g.bind('prov', PROV)
-
-            DCT = Namespace('http://purl.org/dc/terms/')
-            g.bind('dct', DCT)
+            g.bind('dct', DCTERMS)
 
             a = URIRef(self.uri)
 
             # RDF: declare Address instance
             g.add((a, RDF.type, GNAF.Address))
             if self.address_subclass_uri is not None:
-                g.add((a, GNAF.gnafType, URIRef(self.address_subclass_uri)))
+                g.add((a, DCTERMS.type, URIRef(self.address_subclass_uri)))
             else:
-                g.add((a, GNAF.gnafType, URIRef("http://gnafld.net/def/gnaf/code/AddressTypes#Unknown")))
+                g.add((a, DCTERMS.type, URIRef("http://gnafld.net/def/gnaf/code/AddressTypes#Unknown")))
             if self.address_subclass_label is not None:
                 subclass_label = self.address_subclass_label
             else:
                 subclass_label = "Unknown"
+            g.add((a, DCTERMS.identifier, Literal(self.id, datatype=XSD.string)))
+            g.add((a, LOCI.isMemberOf, URIRef(config.URI_ADDRESS_INSTANCE_BASE)))
+
             g.add((a, RDFS.label,
                    Literal('Address ' + self.id + ' of ' + subclass_label + ' type', datatype=XSD.string)))
 
@@ -745,8 +751,9 @@ class Address(GNAFModel):
                    Literal(self.address_string, datatype=XSD.string)))
             # RDF: geometry
             geocode = BNode()
-            g.add((geocode, RDF.type, GNAF.Geocode))
+            g.add((geocode, RDF.type, SF.Point))
             g.add((geocode, GNAF.gnafType, URIRef(self.geocode_type_uri)))
+            g.add((geocode, DCTERMS.type, URIRef(self.geocode_type_uri)))
             g.add((geocode, RDFS.label, Literal(self.geocode_type_label, datatype=XSD.string)))
             g.add((geocode, GEO.asWKT,
                    Literal(self.make_wkt_literal(
@@ -837,7 +844,7 @@ class Address(GNAFModel):
 
             # RDF: data properties
             if self.description is not None:
-                g.add((a, DCT.description, Literal(self.description, datatype=XSD.string)))
+                g.add((a, DCTERMS.description, Literal(self.description, datatype=XSD.string)))
 
             g.add((a, GNAF.hasPostcode, Literal(self.postcode, datatype=XSD.integer)))
 
@@ -845,7 +852,9 @@ class Address(GNAFModel):
                 g.add((a, GNAF.hasBuildingName, Literal(self.building_name, datatype=XSD.string)))
 
             g.add((a, GNAF.hasDateCreated, Literal(self.date_created, datatype=XSD.date)))
+            g.add((a, DCTERMS.created, Literal(self.date_created, datatype=XSD.date)))
             g.add((a, GNAF.hasDateLastModified, Literal(self.date_last_modified, datatype=XSD.date)))
+            g.add((a, DCTERMS.modified, Literal(self.date_last_modified, datatype=XSD.date)))
             if self.date_retired is not None:
                 g.add((a, GNAF.hasDateRetired, Literal(self.date_retired, datatype=XSD.date)))
 

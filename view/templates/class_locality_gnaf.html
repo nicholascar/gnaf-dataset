@@ -5,6 +5,13 @@
         <td><a href="http://linked.data.gov.au/def/gnaf#hasName">Locality Name</a></td>
         <td><code>{{ locality_name }}</code></td>
     </tr>
+    <tr>
+        <td colspan="2">{{ class_description }}</td>
+    </tr>
+    <tr>
+        <td><a href="http://linked.data.gov.au/def/gnaf#gnafType">GNAFType</a></td>
+        <td><code>{{ class_uri }}</code></td>
+    </tr>
     <tr><td><a href="http://linked.data.gov.au/def/gnaf#hasState">Has State</a></td><td><a href="{{ state_uri }}">{{ state_label }}</a></td></tr>
     {% if geometry_wkt is not none %}
     <tr>
