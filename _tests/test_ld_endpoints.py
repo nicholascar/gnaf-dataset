@@ -1,17 +1,21 @@
 # this set of tests calls a series of endpoints that this API is meant to expose and tests them for content
-import requests
+from urllib.request import Request, urlopen
 import re
 import pytest
+
 
 SYSTEM_URI = 'https://gnafld.net'
 #SYSTEM_URI = 'http://localhost:5000'
 
 def valid_endpoint_content(uri, headers, pattern):
     # dereference the URI
-    r = requests.get(uri, headers=headers)
-
+    if headers is None:
+        headers = {}
+    req = Request(uri, headers=headers)
+    with urlopen(req) as resp:
+        content = resp.read().decode('utf-8')
     # parse the content looking for the thing specified in REGEX
-    if re.search(pattern, r.content.decode('utf-8'), re.MULTILINE):
+    if re.search(pattern, content, re.MULTILINE):
         return True
     else:
         return False

@@ -3,6 +3,7 @@ from db import get_db_cursor, reg
 from model import GNAFModel, NotFoundError
 from flask import render_template
 from rdflib import Graph, URIRef, RDF, XSD, Namespace, Literal, BNode
+from rdflib.namespace import DCTERMS
 import _config as config
 from psycopg2 import sql
 
@@ -31,6 +32,8 @@ class Locality(GNAFModel):
         self.longitude = None
         self.date_created = None
         self.date_retired = None
+        self.locality_class_uri = None
+        self.locality_class_label = None
         self.geocode_type = None
         self.geometry_wkt = None
         self.state_pid = None
@@ -46,11 +49,14 @@ class Locality(GNAFModel):
                             lp.latitude,
                             lp.longitude,
                             s.uri AS state_uri, 
-                            s.prefLabel AS state_label
+                            s.prefLabel AS state_label,
+                            lc.uri AS locality_class_uri,
+                            lc.prefLabel AS locality_class_label 
                         FROM {dbschema}.locality l
                         LEFT JOIN {dbschema}.locality_point lp on l.locality_pid = lp.locality_pid
                         LEFT JOIN codes.state s ON CAST(l.state_pid AS text) = s.code
-                        WHERE l.locality_pid = {id}''') \
+                        LEFT JOIN codes.locality lc on l.locality_class_code = lc.code
+                        WHERE l.locality_pid = {id} ;''') \
             .format(dbschema=sql.Identifier(config.DB_SCHEMA), id=sql.Literal(self.id))
 
         self.cursor.execute(s)
@@ -66,6 +72,15 @@ class Locality(GNAFModel):
             self.state_label = r.state_label
             if self.latitude is not None and self.longitude is not None:
                 self.geometry_wkt = self.make_wkt_literal(longitude=self.longitude, latitude=self.latitude)
+            try:
+                self.locality_class_label = r.locality_class_label
+            except (AttributeError, KeyError):
+                pass
+            try:
+                self.locality_class_uri = r.locality_class_uri
+            except (AttributeError, KeyError):
+                pass
+
             break
         else:
             raise NotFoundError()
@@ -108,6 +123,15 @@ class Locality(GNAFModel):
 
     def export_html(self, view='gnaf'):
         if view == 'gnaf':
+            if self.locality_class_label is not None:
+                class_label = self.locality_class_label
+            else:
+                class_label = "Unknown"
+            class_description = 'Locality ' + self.id + ' of ' + class_label + ' type'
+            if self.locality_class_uri is not None:
+                class_uri = self.locality_class_uri
+            else:
+                class_uri = "http://gnafld.net/def/gnaf/code/LocalityTypes#Unknown"
             view_html = render_template(
                 'class_locality_gnaf.html',
                 locality_name=self.locality_name,
@@ -120,7 +144,9 @@ class Locality(GNAFModel):
                 geocode_uri='http://linked.data.gov.au/def/gnaf/code/GeocodeTypes#Locality',
                 geocode_label='Locality',
                 alias_localities=self.alias_localities,
-                locality_neighbours=self.locality_neighbours
+                locality_neighbours=self.locality_neighbours,
+                class_description=class_description,
+                class_uri=class_uri
             )
 
         elif view == 'ISO19160':
@@ -246,26 +272,44 @@ class Locality(GNAFModel):
             GEO = Namespace('http://www.opengis.net/ont/geosparql#')
             g.bind('geo', GEO)
 
+            SF = Namespace('http://www.opengis.net/ont/sf#')
+            g.bind('sf', SF)
+
+            LOCI = Namespace("http://linked.data.gov.au/def/loci#")
+            g.bind('loci', LOCI)
+
             PROV = Namespace('http://www.w3.org/ns/prov#')
             g.bind('prov', PROV)
-
-            DCT = Namespace('http://purl.org/dc/terms/')
-            g.bind('dct', DCT)
+            g.bind('dct', DCTERMS)
 
             l = URIRef(self.uri)
 
-            # RDF: declare Address instance
+            # RDF: declare Locality instance
             g.add((l, RDF.type, GNAF.Locality))
+            if self.locality_class_uri is not None:
+                g.add((l, DCTERMS.type, URIRef(self.locality_class_uri)))
+            else:
+                g.add((l, DCTERMS.type, URIRef("http://gnafld.net/def/gnaf/code/LocalityTypes#Unknown")))
+            if self.locality_class_label is not None:
+                class_label = self.locality_class_label
+            else:
+                class_label = "Unknown"
+            g.add((a, DCTERMS.identifier, Literal(self.id, datatype=XSD.string)))
+            g.add((a, LOCI.isMemberOf, URIRef(config.URI_LOCALITY_INSTANCE_BASE)))
+            g.add((a, RDFS.label, Literal('Locality ' + self.id + ' of ' + class_label + ' type', datatype=XSD.string)))
             g.add((l, GNAF.hasName, Literal(self.locality_name, datatype=XSD.string)))
             g.add((a, GNAF.hasDateCreated, Literal(self.date_created, datatype=XSD.date)))
+            g.add((a, DCTERMS.created, Literal(self.date_created, datatype=XSD.date)))
             if self.date_retired is not None:
                 g.add((a, GNAF.hasDateRetired, Literal(self.date_retired, datatype=XSD.date)))
+                g.add((a, DCTERMS.modified, Literal(self.date_retired, datatype=XSD.date)))
             g.add((l, GNAF.hasState, URIRef(self.state_uri)))
             # RDF: geometry
             if self.geometry_wkt:
                 geocode = BNode()
-                g.add((geocode, RDF.type, GNAF.Geocode))
+                g.add((geocode, RDF.type, SF.Point))
                 g.add((geocode, GNAF.gnafType, URIRef('http://linked.data.gov.au/def/gnaf/code/GeocodeTypes#Locality')))
+                g.add((geocode, DCTERMS.type, URIRef('http://linked.data.gov.au/def/gnaf/code/GeocodeTypes#Locality')))
                 g.add((geocode, RDFS.label, Literal('Locality', datatype=XSD.string)))
                 g.add((geocode, GEO.asWKT, Literal(self.geometry_wkt, datatype=GEO.wktLiteral)))
                 g.add((a, GEO.hasGeometry, geocode))

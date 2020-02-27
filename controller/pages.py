@@ -7,9 +7,10 @@ import pyldapi
 import json
 from rdflib import Graph
 import io
-import requests
+from urllib.request import Request, build_opener, HTTPPasswordMgrWithDefaultRealm, HTTPBasicAuthHandler
+from urllib.parse import urlencode
+from urllib.error import HTTPError
 import _config as config
-import os
 import controller.LOCIDatasetRenderer
 
 pages = Blueprint('routes', __name__)
@@ -242,19 +243,31 @@ def get_sparql_service_description(format, base_url):
     else:
         raise ValueError('Input parameter rdf_format must be one of: ' + ', '.join(rdf_mimetypes_map.values()))
 
+sparql_endpoint_password_mgr = HTTPPasswordMgrWithDefaultRealm()
+sparql_endpoint_password_mgr.add_password(
+    None,
+    config.SPARQL_QUERY_URI,
+    config.SPARQL_AUTH_USR,
+    config.SPARQL_AUTH_PWD)
+basic_pw_handler = HTTPBasicAuthHandler(sparql_endpoint_password_mgr)
 
 def sparql_query(sparql_query, format_mimetype='application/sparql-results+json'):
-    """ Make a SPARQL query"""
-    auth = (config.SPARQL_AUTH_USR, config.SPARQL_AUTH_PWD)
+    """Make a SPARQL query"""
     data = {'query': sparql_query}
+    data = urlencode(data).encode(encoding='utf-8')
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': format_mimetype
     }
+    opener = build_opener(basic_pw_handler)
     try:
-        r = requests.post(config.SPARQL_QUERY_URI, auth=auth, data=data, headers=headers, timeout=30)
-        import pprint
-        pprint.pprint(r.headers)
-        return r.content.decode('utf-8')
+        r = Request(config.SPARQL_QUERY_URI, headers=headers, method='POST')
+        with opener.open(r, data, 30) as resp:
+            return resp.read().decode('utf-8')
+        #r = requests.post(config.SPARQL_QUERY_URI, auth=auth, data=data, headers=headers, timeout=30)
+        #import pprint
+        #pprint.pprint(r.headers)
+    except HTTPError as he:
+        return "HTTP Exception! Status: {}\n{}".format(str(he.code), repr(he))
     except Exception as e:
-        raise e
+        return str(e)

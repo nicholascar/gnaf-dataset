@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from rdflib.namespace import DCTERMS
+
 from db import get_db_cursor, reg
 from model import GNAFModel, NotFoundError
 from flask import render_template
@@ -284,6 +286,8 @@ class StreetLocality(GNAFModel):
                     geometry_wkt = None
                 self.locality_pid = record[6]
                 break
+            else:
+                raise NotFoundError()
             RDFS = Namespace('http://www.w3.org/2000/01/rdf-schema#')
             g.bind('rdfs', RDFS)
 
@@ -293,17 +297,23 @@ class StreetLocality(GNAFModel):
             GEO = Namespace('http://www.opengis.net/ont/geosparql#')
             g.bind('geo', GEO)
 
+            SF = Namespace('http://www.opengis.net/ont/sf#')
+            g.bind('sf', SF)
+
+            LOCI = Namespace("http://linked.data.gov.au/def/loci#")
+            g.bind('loci', LOCI)
+
             PROV = Namespace('http://www.w3.org/ns/prov#')
             g.bind('prov', PROV)
-
-            DCT = Namespace('http://purl.org/dc/terms/')
-            g.bind('dct', DCT)
+            g.bind('dct', DCTERMS)
 
             s = URIRef(self.uri)
             locality_uri = URIRef(config.URI_LOCALITY_INSTANCE_BASE + self.locality_pid)
 
             # RDF: declare Address instance
             g.add((s, RDF.type, GNAF.StreetLocality))
+            g.add((a, DCTERMS.identifier, Literal(self.id, datatype=XSD.string)))
+            g.add((a, LOCI.isMemberOf, URIRef(config.URI_STREETLOCALITY_INSTANCE_BASE)))
             g.add((s, GNAF.hasName, Literal(self.street_name, datatype=XSD.string)))
             if self.street_type is not None:
                 g.add((s, GNAF.hasStreetType, URIRef('http://linked.data.gov.au/def/gnaf/code/StreetTypes#'+self.street_type)))
@@ -316,8 +326,9 @@ class StreetLocality(GNAFModel):
             # RDF: geometry
             if geometry_wkt is not None:
                 geocode = BNode()
-                g.add((geocode, RDF.type, GNAF.Geocode))
+                g.add((geocode, RDF.type, SF.Point))
                 g.add((geocode, GNAF.gnafType, URIRef('http://linked.data.gov.au/def/gnaf/code/GeocodeTypes#Locality')))
+                g.add((geocode, DCTERMS.type, URIRef('http://linked.data.gov.au/def/gnaf/code/GeocodeTypes#Locality')))
                 g.add((geocode, RDFS.label, Literal('Locality', datatype=XSD.string)))
                 g.add((geocode, GEO.asWKT, Literal(geometry_wkt, datatype=GEO.wktLiteral)))
                 g.add((s, GEO.hasGeometry, geocode))

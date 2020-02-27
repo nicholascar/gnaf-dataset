@@ -3,6 +3,7 @@ from db import get_db_cursor
 from model import GNAFModel, NotFoundError
 from flask import render_template
 from rdflib import Graph, URIRef, RDF, XSD, Namespace, Literal, BNode, RDFS
+from rdflib.namespace import DCTERMS
 import _config as config
 from psycopg2 import sql
 
@@ -43,15 +44,14 @@ class AddressSite(GNAFModel):
 
             cursor.execute(s)
             rows = cursor.fetchall()
-            found = False
             for row in rows:
-                found = True
                 address_type = row[0]
                 address_site_name = row[1]
                 geocode_pid = row[2]
                 if geocode_pid is not None:
                     self.address_site_geocode_ids[geocode_pid] = row[3].title()
-            if not found:
+                break
+            else:
                 raise NotFoundError()
             #
             # s2 = sql.SQL('''SELECT
@@ -150,6 +150,11 @@ class AddressSite(GNAFModel):
             g.bind('gnaf', GNAF)
             GEO = Namespace('http://www.opengis.net/ont/geosparql#')
             g.bind('geo', GEO)
+            SF = Namespace('http://www.opengis.net/ont/sf#')
+            g.bind('sf', SF)
+            LOCI = Namespace("http://linked.data.gov.au/def/loci#")
+            g.bind('loci', LOCI)
+            g.bind('dct', DCTERMS)
             s = sql.SQL('''SELECT
                 a.address_type, a.address_site_name, coa.uri, coa.preflabel, gc.address_site_geocode_pid, gc.geocode_type_code, gc.longitude, gc.latitude, cog.uri, cog.preflabel 
                 FROM {dbschema}.address_site as a
@@ -161,9 +166,7 @@ class AddressSite(GNAFModel):
             cursor = self.cursor
             cursor.execute(s)
             rows = cursor.fetchall()
-            found = False
             for row in rows:
-                found = True
                 address_type = row[0]
                 address_site_name = row[1]
                 address_type_uri = row[2]
@@ -175,9 +178,12 @@ class AddressSite(GNAFModel):
                 latitude = row[7]
                 geocode_uri = row[8]
                 geocode_preflabel = row[9]
-            if not found:
+                break
+            else:
                 raise NotFoundError()
             g.add((a, RDF.type, GNAF.AddressSite))
+            g.add((a, DCTERMS.identifier, Literal(self.id, datatype=XSD.string)))
+            g.add((a, LOCI.isMemberOf, URIRef(config.URI_ADDRESS_SITE_INSTANCE_BASE)))
             desc = 'AddressSite {}'.format(self.id)
             if address_site_name:
                 desc = "{} \"{}\"".format(desc, address_site_name)
@@ -185,15 +191,16 @@ class AddressSite(GNAFModel):
             if address_type and address_type_label:
                 desc = "{} of {} type".format(desc, address_type_label)
             if address_type and address_type_uri:
-                g.add((a, GNAF.gnafType, URIRef(address_type_uri)))
+                g.add((a, DCTERMS.type, URIRef(address_type_uri)))
             else:
-                g.add((a, GNAF.gnafType, URIRef("http://gnafld.net/def/gnaf/code/AddressTypes#Unknown")))
+                g.add((a, DCTERMS.type, URIRef("http://gnafld.net/def/gnaf/code/AddressTypes#Unknown")))
             g.add((a, RDFS.comment, Literal(desc, lang="en")))
             if geocode_uri or (latitude and longitude):
                 geocode = BNode()
-                g.add((geocode, RDF.type, GNAF.Geocode))
+                g.add((geocode, RDF.type, SF.Point))
                 if geocode_uri:
                     g.add((geocode, GNAF.gnafType, URIRef(geocode_uri)))
+                    g.add((geocode, DCTERMS.type, URIRef(geocode_uri)))
                 if geocode_preflabel:
                     g.add((geocode, RDFS.label, Literal(geocode_preflabel, datatype=XSD.string)))
                 if longitude and latitude:

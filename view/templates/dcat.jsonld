@@ -91,7 +91,7 @@
     "contactPoint" : "_:b14",
     "distribution" : [ "_:b11", "_:b10", "_:b2", "_:b3", "_:b6", "_:b7" ],
     "keyword" : [ "gnaf", "geocoding", "address", "spatial", "psma", "location", "national address file", "geocoded", "g-naf" ],
-    "dcat:landingPage" : {
+    "landingPage" : {
       "@id" : "https://gnafld.net/"
     },
     "qualifiedRelation" : "_:b9",
@@ -142,7 +142,7 @@
     "@type" : "dcat:DataService",
     "publisher" : "PSMA",
     "conformsTo" : "https://github.com/UKGovLD/linked-data-api/blob/wiki/Specification.md",
-    "dcat:endpointDescription" : "Link to Swagger description here Ashley",
+    "endpointDescription" : "Link to Swagger description here Ashley",
     "endpointURL" : "https://gnafld.net/",
     "servesDataset" : "http://linked.data.gov.au/dataset/gnaf",
     "qualifiedAttribution" : "_:b0"
