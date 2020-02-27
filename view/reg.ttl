@@ -1,4 +1,3 @@
-@prefix ereg: <https://promsns.org/def/eregistry#> .
 @prefix reg: <http://purl.org/linked-data/registry#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -9,25 +8,25 @@
     rdfs:label "Address Register"^^xsd:string ;
     reg:containedItemClass <http://linked.data.gov.au/def/gnaf#Address> ;
     rdfs:comment "Register of all GNAF Addresses"^^xsd:string ;
-    ereg:superregister <http://linked.data.gov.au/dataset/gnaf> .
+    reg:register <http://linked.data.gov.au/dataset/gnaf> .
 
 <http://linked.data.gov.au/dataset/gnaf/addressSite/> a reg:Register ;
     rdfs:label "Address Site Register"^^xsd:string ;
     reg:containedItemClass <http://linked.data.gov.au/def/gnaf#AddressSite> ;
     rdfs:comment "Register of all GNAF Address Sites"^^xsd:string ;
-    ereg:superregister <http://linked.data.gov.au/dataset/gnaf> .
+    reg:register <http://linked.data.gov.au/dataset/gnaf> .
 
 <http://linked.data.gov.au/dataset/gnaf/locality/> a reg:Register ;
     rdfs:label "Locality Register"^^xsd:string ;
     reg:containedItemClass <http://linked.data.gov.au/def/gnaf#Locality> ;
     rdfs:comment "Register of all GNAF Localities"^^xsd:string ;
-    ereg:superregister <http://linked.data.gov.au/dataset/gnaf> .
+    reg:register <http://linked.data.gov.au/dataset/gnaf> .
 
 <http://linked.data.gov.au/dataset/gnaf/streetLocality/> a reg:Register ;
     rdfs:label "Street Locality Register"^^xsd:string ;
     reg:containedItemClass <http://linked.data.gov.au/def/gnaf#StreetLocality> ;
     rdfs:comment "Register of all GNAF Street Localities"^^xsd:string ;
-    ereg:superregister <http://linked.data.gov.au/dataset/gnaf> .
+    reg:register <http://linked.data.gov.au/dataset/gnaf> .
 
 <http://linked.data.gov.au/dataset/gnaf> a reg:Register ;
     rdfs:label "The GNAF's Register of Registers"^^xsd:string ;
